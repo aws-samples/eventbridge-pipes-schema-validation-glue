@@ -1,11 +1,9 @@
 # Event schema validation for Apache Kafka with EventBridge Pipes and Glue Schema Registry
 
-This pattern uses AWS Glue Schema Registry to deserialize Avro messages into JSON messages using [Amazon Eventbridge Pipes](https://aws.amazon.com/eventbridge/pipes/) and an enrichment [AWS Lambda](https://aws.amazon.com/lambda/) function.
+This sample uses AWS Glue Schema Registry to deserialize Avro messages into JSON messages using [Amazon Eventbridge Pipes](https://aws.amazon.com/eventbridge/pipes/) and an enrichment [AWS Lambda](https://aws.amazon.com/lambda/) function.
 
-Learn more about this pattern at Serverless Land Patterns: https://serverlessland.com/patterns/eventbridge-pipes-schema-validation
-
-Important: this application uses various AWS services and there are costs associated with these services after the Free Tier usage - please see the [AWS Pricing page](https://aws.amazon.com/pricing/) for details. You are responsible for any AWS costs incurred. No warranty is implied in this example.
-
+> This architecture will create resources that will incur costs. Please refer to the [AWS Pricing](https://aws.amazon.com/pricing/) page for details and ensure you understand the costs before deploying this stack. This application was written for demonstration and education purposes and not for production use. Take a look at the [Security](#security) section of this readme and consider consulting your security team before deploying this stack. No warranty is implied in this example.
+ 
 ## Requirements
 
 - [Create an AWS account](https://portal.aws.amazon.com/gp/aws/developer/registration/index.html) if you do not already have one and log in. The IAM user that you use must have sufficient permissions to make necessary AWS service calls and manage AWS resources.
@@ -23,13 +21,13 @@ Important: this application uses various AWS services and there are costs associ
 1. Create a new directory, navigate to that directory in a terminal and clone the GitHub repository:
 
    ```bash
-   git clone https://github.com/aws-samples/serverless-patterns
+   git clone git@github.com:aws-samples/eventbridge-pipes-schema-validation-glue.git
    ```
 
-1. Change directory to the pattern directory:
+1. Change directory to the sample directory:
 
    ```bash
-   cd eventbridge-pipes-schema-validation
+   cd eventbridge-pipes-schema-validation-glue
    ```
 
 1. Create a `virtualenv`:
@@ -65,15 +63,15 @@ Important: this application uses various AWS services and there are costs associ
    cdk deploy --parameters clusterarn=<Your ARN goes here> --parameters topicname=<Your topic name goes here>
 ```
 
-![Pattern architecture](img/architecture.png "Pattern architecture")
+![Sample architecture](img/architecture.png "Sample architecture")
 
-This pattern sets up an EventBridge pipe with the following key elements:
+This sample sets up an EventBridge pipe with the following key elements:
 
 1. The **source** of the pipe is a topic provided from a MSK serverless Kafka cluster. EventBridge Pipes reads events from the Kafka topic in batches and provides these to the enrichment Lambda function as an event payload.
 
 1. The **enrichment** step of the pipe consists of a Lambda function that validates the incoming events against Glue Schema Registry, deserializes them from Avro, and transforms them to JSON.
 
-1. The **target** of this pattern is an EventBridge custom event bus which is invoked by EventBridge Pipes with the events returned by the enrichment Lambda function. EventBridge Pipes supports a variety of other targets, including Lambda, AWS Step Functions, Amazon API Gateway, API destinations, and more.
+1. The **target** of this sample is an EventBridge custom event bus which is invoked by EventBridge Pipes with the events returned by the enrichment Lambda function. EventBridge Pipes supports a variety of other targets, including Lambda, AWS Step Functions, Amazon API Gateway, API destinations, and more.
 
 The Java enrichment function uses the [`AWS Glue Schema Registry Library`](https://github.com/awslabs/aws-glue-schema-registry) for schema validation and Avro deserialization.
 
@@ -187,7 +185,7 @@ The function performs the following tasks:
    }
    ```
 
-1. Deploy this pattern using the above deployment instructions. The EventBridge pipe will start polling messages from the Kafka topic.
+1. Deploy this sample using the above deployment instructions. The EventBridge pipe will start polling messages from the Kafka topic.
 
    Polled message batches are passed to the enrichment Lambda function in the following format. Note that the `key` field is `base64`-encoded and the `value` field is serialized in [Apache Avro](https://avro.apache.org/) as well as `base64`-encoded at this point.
 
