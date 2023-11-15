@@ -2,6 +2,8 @@
 
 This sample uses AWS Glue Schema Registry to deserialize Avro messages into JSON messages using [Amazon Eventbridge Pipes](https://aws.amazon.com/eventbridge/pipes/) and an enrichment [AWS Lambda](https://aws.amazon.com/lambda/) function.
 
+See the associated blog post on the AWS Compute Blog: https://aws.amazon.com/blogs/compute/converting-apache-kafka-events-from-avro-to-json-using-eventbridge-pipes/
+
 > This architecture will create resources that will incur costs. Please refer to the [AWS Pricing](https://aws.amazon.com/pricing/) page for details and ensure you understand the costs before deploying this stack. This application was written for demonstration and education purposes and not for production use. Take a look at the [Security](#security) section of this readme and consider consulting your security team before deploying this stack. No warranty is implied in this example.
  
 ## Requirements
