@@ -23,7 +23,7 @@ See the associated blog post on the AWS Compute Blog: https://aws.amazon.com/blo
 1. Create a new directory, navigate to that directory in a terminal and clone the GitHub repository:
 
    ```bash
-   git clone git@github.com:aws-samples/eventbridge-pipes-schema-validation-glue.git
+   git clone https://github.com/aws-samples/eventbridge-pipes-schema-validation-glue.git
    ```
 
 1. Change directory to the sample directory:
