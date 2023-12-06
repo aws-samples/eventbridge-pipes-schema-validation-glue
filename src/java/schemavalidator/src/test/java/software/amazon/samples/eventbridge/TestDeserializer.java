@@ -36,7 +36,7 @@ public class TestDeserializer {
     @Before
     public void setupAvro () throws IOException {
 
-        schema = new Schema.Parser().parse(new File("../../../shared/customer_schema.avsc"));
+        schema = new Schema.Parser().parse(TestDeserializer.class.getResourceAsStream("/customer_schema.avsc"));
 
         Customer customer = Customer.newBuilder()
                 .setFirstName("Max")

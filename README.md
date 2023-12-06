@@ -90,7 +90,7 @@ The function performs the following tasks:
 
 ## Testing
 
-1. Set up a MSK serverless cluster.
+1. [Create an MSK serverless cluster](https://docs.aws.amazon.com/msk/latest/developerguide/create-serverless-cluster.html).
 
 1. Set up a Kafka producer that serializes messages using the `Customer` schema using AWS Glue Schema registry. This schema has already been created for you.
 
@@ -234,6 +234,55 @@ The function performs the following tasks:
      }
    }
    ```
+
+## Adapting the Avro schema
+
+This solution registers an Apache Avro schema with Glue Schema Registry during deployment. By default, the following example schema ([`shared/customer_schema.avsc`](shared/customer_schema.avsc)) is used:
+
+```json
+{
+  "namespace": "example.avro",
+  "type": "record",
+  "name": "Customer",
+  "fields": [
+    {
+      "name": "customer_account_no",
+      "type": "int",
+      "doc": "customer account number"
+    },
+    { "name": "first_name", "type": "string" },
+    { "name": "middle_name", "type": ["null", "string"], "default": null },
+    { "name": "last_name", "type": "string" },
+    {
+      "name": "email_addresses",
+      "type": ["null", { "type": "array", "items": "string" }]
+    },
+    { "name": "customer_address", "type": "string", "doc": "customer address" },
+    {
+      "name": "mode_of_payment",
+      "type": {
+        "type": "enum",
+        "name": "ModeOfPayment",
+        "symbols": ["CARD", "CASH"]
+      },
+      "default": "CARD"
+    },
+    { "name": "customer_rating", "type": ["null", "int"], "default": null }
+  ]
+}
+```
+
+To make this solution work with your own schema:
+
+1. Replace [`shared/customer_schema.avsc`](shared/customer_schema.avsc) with your own Avro schema file and update the CDK template ([`infrastructure/kafka_glue_validate.py`](infrastructure/kafka_glue_validate.py)) to reflect this change:
+
+   ```python
+   schema_file = open("shared/customer_schema.avsc", "r") # Update file name
+   ```
+
+1. Replace [`src/java/schemavalidator/src/test/resources`](src/java/schemavalidator/src/test/resources/customer_schema.avsc) with the new schema file.
+
+1. Update the test case [`src/java/schemavalidator/src/test/java/software/amazon/samples/eventbridge`](src/java/schemavalidator/src/test/java/software/amazon/samples/eventbridge/TestDeserializer.java) to use your schema.
 
 ## Cleanup
 
