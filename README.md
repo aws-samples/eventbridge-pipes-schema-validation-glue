@@ -5,16 +5,17 @@ This sample uses AWS Glue Schema Registry to deserialize Avro messages into JSON
 See the associated blog post on the AWS Compute Blog: https://aws.amazon.com/blogs/compute/converting-apache-kafka-events-from-avro-to-json-using-eventbridge-pipes/
 
 > This architecture will create resources that will incur costs. Please refer to the [AWS Pricing](https://aws.amazon.com/pricing/) page for details and ensure you understand the costs before deploying this stack. This application was written for demonstration and education purposes and not for production use. Take a look at the [Security](#security) section of this readme and consider consulting your security team before deploying this stack. No warranty is implied in this example.
- 
+
 ## Requirements
 
 - [Create an AWS account](https://portal.aws.amazon.com/gp/aws/developer/registration/index.html) if you do not already have one and log in. The IAM user that you use must have sufficient permissions to make necessary AWS service calls and manage AWS resources.
 - [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2.html) installed and configured
-- [Git Installed](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
 - [AWS Cloud Development Kit (AWS CDK)](https://aws.amazon.com/cdk/) installed
+- [Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git) installed
+- [Docker](https://docs.docker.com/engine/install/) installed
 - [Java 17](https://openjdk.org/projects/jdk/17/) installed
 - [Maven](https://maven.apache.org/) installed
-- [Amazon MSK Serverless](https://docs.aws.amazon.com/msk/latest/developerguide/serverless.html) running and a topic to produce test messages
+- [Amazon MSK Serverless](https://docs.aws.amazon.com/msk/latest/developerguide/serverless.html) cluster running and a topic to produce test messages
 
 ## Deployment Instructions
 
